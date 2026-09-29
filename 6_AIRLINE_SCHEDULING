@@ -1,0 +1,87 @@
+flights = ["F1", "F2", "F3"]
+aircraft = ["A1", "A2"]
+timeslots = [8, 10, 12, 14]
+crew = ["C1", "C2"]
+
+maintenance = {"A1": [12]}
+schedule = {}
+
+
+def assign(i):
+    if i == len(flights):
+        return True
+
+    f = flights[i]
+
+    for a in aircraft:
+        for t in timeslots:
+            for c in crew:
+
+                # Check constraints
+                if t in maintenance.get(a, []):
+                    continue
+
+                if (a, t) in schedule.values():
+                    continue
+
+                if any(x[2] == c and x[1] == t for x in schedule.values()):
+                    continue
+
+                # Assign
+                schedule[f] = (a, t, c)
+
+                if assign(i + 1):
+                    return True
+
+                # Backtrack
+                del schedule[f]
+
+    return False
+
+
+if assign(0):
+    print("Final Schedule:\n")
+    print("Flight  Aircraft  Time Slot  Crew")
+
+    for f, (a, t, c) in schedule.items():
+        print(f"{f:<8} {a:<9} {t}:00       {c}")
+else:
+    print("No valid schedule found.")
+  return True
+
+    f = flights[i]
+
+    for a in aircraft:
+        for t in timeslots:
+            for c in crew:
+
+                # Check constraints
+                if t in maintenance.get(a, []):
+                    continue
+
+                if (a, t) in schedule.values():
+                    continue
+
+                if any(x[2] == c and x[1] == t for x in schedule.values()):
+                    continue
+
+                # Assign
+                schedule[f] = (a, t, c)
+
+                if assign(i + 1):
+                    return True
+
+                # Backtrack
+                del schedule[f]
+
+    return False
+
+
+if assign(0):
+    print("Final Schedule:\n")
+    print("Flight  Aircraft  Time Slot  Crew")
+
+    for f, (a, t, c) in schedule.items():
+        print(f"{f:<8} {a:<9} {t}:00       {c}")
+else:
+    print("No valid schedule found.")
